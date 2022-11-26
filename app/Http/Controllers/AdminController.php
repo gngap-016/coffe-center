@@ -14,7 +14,7 @@ class AdminController extends Controller
 
     public function account()
     {
-        dd();
+        return view('admin.account');
     }
 
     public function changePassword(Request $request)

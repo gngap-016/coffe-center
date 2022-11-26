@@ -9,7 +9,7 @@ class SettingController extends Controller
     //
     public function index()
     {
-        dd();
+        return view('admin.setting');
     }
 
     public function store(Request $request)

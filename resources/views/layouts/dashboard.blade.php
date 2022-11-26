@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Coffee App</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,67 +19,74 @@
     <script type="text/javascript" src="{{ asset('app-assets/js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('app-assets/js/bootstrap2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('app-assets/js/feather.min.js') }}"></script>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <style>
+        body {
+            font-family: 'Poppins';
+        }
+
+        .sidebar .nav-link.active,.sidebar .nav-link.active:hover  {
+            color: white;
+            background: #DFD3C3;
+            margin: 10px !important;
+            border-radius: 5px !important;
+        }
+        .sidebar .nav-link:hover {
+            color: white;
+            background: grey;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg sticky-top" style="min-height: 76px; background-color: #F8EDE3;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+              <a class="navbar-brand fw-bold" href="/">Coffee App</a>
             </div>
-        </nav>
+          </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container-fluid">
+            <div class="row">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #7E6F83">
+                    <div class="position-sticky pt-3 sidebar-sticky">
+                        <ul class="nav flex-column">
+                            @foreach (config('menu') as $key => $value)
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex py-2 {{ activeMenu($value['route']) }}" aria-current="page" href="{{ route($value['route']) }}">
+                                        <i data-feather="{{ $value['icon'] }}" class="align-text-bottom my-auto me-2 text-light"></i>
+                                        <span style="padding-top:3px !important" class="p-0 my-auto text-light">{{ $value['name'] }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li class="nav-item">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                <a class="nav-link py-2 d-flex" aria-current="page"href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i data-feather="log-out" class="align-text-bottom my-auto me-2 text-light"></i>
+                                    <span style="padding-top:3px !important" class="p-0 my-auto text-light">Keluar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-3" style="min-height: 100vh">
+                    @yield('content')
+                </main>
+            </div>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="{{ asset('app-assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/bootstrap-notify.min.js') }}" ></script>
+    <script src="{{ asset('app-assets/js/notify-script.js') }}" ></script>
+    <script src="{{ asset('app-assets/js/helper.js') }}" ></script>
+    <script src="{{ asset('app-assets/js/sweet-alert/sweetalert2@11.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @include('layouts.includes.notify')
+
+    @yield('script')
 </body>
 </html>

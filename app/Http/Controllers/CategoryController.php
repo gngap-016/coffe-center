@@ -9,7 +9,7 @@ class CategoryController extends Controller
     //
     public function index()
     {
-        dd();
+        return view('admin.category');
     }
 
     public function store(Request $request)

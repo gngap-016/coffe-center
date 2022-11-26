@@ -9,7 +9,7 @@ class ProductController extends Controller
     //
     public function index()
     {
-        dd();
+        return view('admin.product');
     }
 
     public function store(Request $request)

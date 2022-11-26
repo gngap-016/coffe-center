@@ -52,7 +52,7 @@
                         <div class="card-body">
                             <img src="../images/banner-coffee.png" class="rounded img-fluid mb-2" alt="" style="min-height: 153px; max-width: 213px backgroun: grey">
 
-                            <p class="text-price mb-2">Rp{{ number_format($d->price) }}<span class="fs-6 text-category">/bibit</span></p>
+                            <p class="text-price mb-2">Rp{{ number_format($d->price) }}</p>
                             <p class="fw-bold mb-2">{{ $d->name }}</p>
 
                             <p class="text-category mb-2">
