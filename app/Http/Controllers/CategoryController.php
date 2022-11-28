@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -9,7 +10,8 @@ class CategoryController extends Controller
     //
     public function index()
     {
-        return view('admin.category');
+        $categories = Category::select('categories.*')->get();
+        return view('admin.category', compact(['categories']));
     }
 
     public function store(Request $request)
