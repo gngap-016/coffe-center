@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     <link href="{{ asset('app-assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('app-assets/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet">
 
     <script type="text/javascript" src="{{ asset('app-assets/js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('app-assets/js/bootstrap2.min.js') }}"></script>
