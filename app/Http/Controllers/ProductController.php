@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -9,7 +11,11 @@ class ProductController extends Controller
     //
     public function index()
     {
-        return view('admin.product');
+        $products = Product::select('products.*', 'c.name as category_name')
+            ->join('categories as c', 'c.id', 'products.category_id')
+            ->get();
+        $categories = Category::select('categories.*')->get();
+        return view('admin.product', compact(['products', 'categories']));
     }
 
     public function store(Request $request)
