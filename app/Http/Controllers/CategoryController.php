@@ -12,20 +12,36 @@ class CategoryController extends Controller
     {
         $categories = Category::select('categories.*')->get();
         return view('admin.category', compact(['categories']));
+        // return view('admin.category')->with([
+        //     'categories' => Category::all(),
+        // ]);
     }
 
-    public function store(Request $request)
+
+    public function addCategory(Request $request)
     {
-        dd();
+        $categories = new Category;
+        $categories->name = $request->category_name;
+        $categories->status = $request->category_status;
+        $categories->save();
+
+        return redirect('/category');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        dd();
+        $categories = Category::find($id);
+        $categories->name = $request->category_name;
+        $categories->status = $request->category_status;
+        $categories->save();
+
+        return redirect('/category');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        dd();
+        $categories = Category::find($id)->delete();
+        return redirect('/category');
+        
     }
 }
