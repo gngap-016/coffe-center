@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            <h2>Data Kategori</h2>
+            <h2>Data Produk</h2>
         </div>
         <div class="col-sm-4">
             <button type="button" class="btn btn-secondary float-end" data-bs-toggle="modal" data-bs-target="#addData">
