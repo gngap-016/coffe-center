@@ -1,6 +1,4 @@
-@extends('layouts.dashboard')
-
-@section('content')
+@extends('layouts.dashboard') @section('content')
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
@@ -60,7 +58,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Modal Add -->
 <div class="modal fade modal-xl" id="addData" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -285,6 +282,4 @@
 </script>
 @endsection
 
-<style>
-
-</style>
+<style></style>
