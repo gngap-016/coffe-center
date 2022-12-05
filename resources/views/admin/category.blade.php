@@ -18,7 +18,7 @@
             <table id="dataTable" class="table table-striped">
                 <thead>
                     <tr>
-                        <!-- <th>ID</th> -->
+                        {{-- <th>ID</th> --}}
                         <th>Nama Kategori</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -27,7 +27,7 @@
                 <tbody>
                     @foreach ($categories as $category)
                     <tr>
-                        <!-- <td>{{ $category->id }}</td> -->
+                        {{-- <td>{{ $category->id }}</td> --}}
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->status }}</td>
                         <td>
@@ -61,6 +61,8 @@
     class="modal fade modal-lg"
     id="addData"
     tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
 >
@@ -130,6 +132,8 @@
     class="modal fade modal-lg"
     id="editData{{$category->id}}"
     tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
 >
@@ -203,6 +207,8 @@
     class="modal fade modal-lg"
     id="deleteData{{$category->id}}"
     tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
 >
