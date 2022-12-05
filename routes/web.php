@@ -63,7 +63,7 @@ Route::name('admin.')->middleware(['auth'])->group(function () {
     });
     Route::controller(ProductController::class)->prefix('product')->name('product.')->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::post('/store', 'store')->name('store');
+        Route::post('/addProduct', 'addProduct')->name('addProduct');
         Route::post('/{id}/update', 'update')->name('update');
         Route::get('/{id}/destroy', 'destroy')->name('destroy');
     });
