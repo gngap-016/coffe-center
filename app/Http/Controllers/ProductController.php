@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 class ProductController extends Controller
 {
@@ -18,8 +21,25 @@ class ProductController extends Controller
         return view('admin.product', compact(['products', 'categories']));
     }
 
+
     public function addProduct(Request $req)
     {
+        if($req->hasFile('product_banner')){
+            $filenamewithextension = $req->file('product_banner')->getClientOriginalName();
+
+            $fileName = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            $extension = $req->file('product_banner')->getClientOriginalExtension();
+
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+
+            $req->file('product_banner')->storeAs('public/product_images', $fileNameToStore);
+            $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
+
+            $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
+            $product = Image::make($thumbnailPath)->resize(100, 100);
+            $product->save($thumbnailPath);
+        }
         $product = new Product;
         $product->name = $req->product_name;
         $product->quantity = $req->product_quantity;
@@ -27,17 +47,43 @@ class ProductController extends Controller
         $product->category_id = $req->category_id;
         $product->price = $req->product_price;
         $product->status = $req->product_status;
-        // $product->thumbnail = $req->;
-        // $product->banner = $req->;
+        
+        $product->banner = '/' . $fileNameToStore;
+        $product->thumbnail = '/' . $fileNameToStore;
+        
         $product->raw = $req->product_raw;
         // dd($product);
-        
-
+        $product->save();
         return redirect('/product');
     }
 
     public function update(Request $req, $id)
     {
+        
+        if($req->hasFile('product_banner')){
+
+            if($req->oldImage){
+                Storage::delete('public/product_images'.$req->oldImage);
+                Storage::delete('public/product_images/thumbnail'.$req->oldImage);
+            }
+            // dd($req->oldImage);
+            $filenamewithextension = $req->file('product_banner')->getClientOriginalName();
+
+            $fileName = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            $extension = $req->file('product_banner')->getClientOriginalExtension();
+
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+
+            $req->file('product_banner')->storeAs('public/product_images', $fileNameToStore);
+            $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
+
+            $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
+            $product = Image::make($thumbnailPath)->resize(100, 100);
+            $product->save($thumbnailPath);
+            // dd($product);
+            
+        }
         $product = Product::find($id);
         $product->name = $req->product_name;
         $product->quantity = $req->product_quantity;
@@ -45,17 +91,21 @@ class ProductController extends Controller
         $product->category_id = $req->category_id;
         $product->price = $req->product_price;
         $product->status = $req->product_status;
-        // $product->thumbnail = $req->;
-        // $product->banner = $req->;
+        $product->banner = '/' . $fileNameToStore;
+        $product->thumbnail = '/' . $fileNameToStore;
         $product->raw = $req->product_raw;
-        // dd($product);
         $product->save();
 
         return redirect('/product');
     }
 
-    public function destroy($id)
-    {
+    public function destroy(Request $req, $id)
+    {   
+        // dd($req->oldImage);
+        if($req->oldImage){
+            Storage::delete('public/product_images'.$req->oldImage);
+            Storage::delete('public/product_images/thumbnail'.$req->oldImage);
+        }
         $product = Product::find($id)->delete();
         return redirect('/product');
     }

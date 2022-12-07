@@ -35,8 +35,8 @@
                         <td>{{ $no++ }}</td>
                         <td>
                             @if ($product->thumbnail !== null)
-                            <img src="product-images/thumbnail/{{ $product->thumbnail }}" class="img-thumbnail"
-                                width="40px" alt="{{ $product->name }}">
+                            <img src="{{ asset('storage/product_images/thumbnail').$product->thumbnail }}"
+                                class="img-thumbnail" width="40px" alt="{{ $product->name }}">
                             @else
                             <img src="product-images/default.png" class="img-thumbnail" width="40px"
                                 alt="{{ $product->name }}">
@@ -175,9 +175,17 @@
                             <p class="text-danger text-center">Maksimal Ukuran Foto 1024KB / 1MB dengan format .JPG
                                 .JPEG .PNG</p>
                             <div class="form-group text-center">
-                                <img src="product-images/{{ ($product->banner !== null) ? $product->banner : 'default.png' }}"
-                                    alt="" id="gambar_load{{$product->id}}" class="img-thumbnail"
+                                <!-- Tampilan Gambar -->
+                                <input type="hidden" name="oldImage" value="{{$product->banner}}">
+                                @if ($product->banner !== null)
+                                <img src="{{ asset('storage/product_images').$product->banner }}" alt=""
+                                    id="gambar_load{{$product->id}}" class="img-thumbnail"
                                     style="max-width: 300px; max-height: 300px;">
+                                @else
+                                <img src="product-images/default.png" class="img-thumbnail" width="40px"
+                                    alt="{{ $product->name }}">
+                                @endif
+
                                 <br>
                                 <label class="fotoLabel{{$product->id}}">Preview Foto</label>
                             </div>
@@ -259,6 +267,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="product/{{ $product->id }}/destroy">
+                <input type="hidden" name="oldImage" value="{{$product->banner}}">
                 <div class="modal-body">
                     Anda Yakin ingin menghapus <b>{{ $product->name }}</b>
                 </div>
