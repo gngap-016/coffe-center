@@ -182,7 +182,9 @@
                                     id="gambar_load{{$product->id}}" class="img-thumbnail"
                                     style="max-width: 300px; max-height: 300px;">
                                 @else
-                                <img src="product-images/default.png" class="img-thumbnail" width="40px"
+                                <img src="product-images/default.png" class="img-thumbnail"
+                                    id="gambar_load{{$product->id}}"
+                                    style="max-width: 300px; max-height: 300px;"
                                     alt="{{ $product->name }}">
                                 @endif
 
