@@ -1,4 +1,6 @@
-@extends('layouts.dashboard') @section('content')
+@extends('layouts.dashboard')
+
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
@@ -13,7 +15,7 @@
             <table id="dataTable" class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No.</th>
                         <th>Foto</th>
                         <th>Nama Produk</th>
                         <th>Kategori</th>
@@ -25,9 +27,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $no = 1;
+                    @endphp
                     @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product->id }}</td>
+                        <td>{{ $no++ }}</td>
                         <td>
                             @if ($product->thumbnail !== null)
                             <img src="product-images/thumbnail/{{ $product->thumbnail }}" class="img-thumbnail"
@@ -179,8 +184,7 @@
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <input type="file" name="product_banner" class="form-control"
-                                        id="preview_gambar{{$product->id}}" onchange="previewImgEdt{{$product->id}}()"
-                                        accept="image/*">
+                                        id="preview_gambar{{$product->id}}" onchange="previewImgEdt{{$product->id}}()">
                                 </div>
                             </div>
                         </div>
@@ -295,20 +299,19 @@
 
     // preview gambar edit
     @foreach($products as $product)
-        function previewImgEdt{ { $product -> id } } () {
-            const foto{{ $product-> id
-        }}      = document.querySelector('#preview_gambar{{$product->id}}');
-    const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
-    const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
+        function previewImgEdt{{$product->id}}() {
+            const foto{{ $product-> id}} = document.querySelector('#preview_gambar{{$product->id}}');
+            const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
+            const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
 
-            fotoLabel{ { $product -> id } }.textContent = foto{ { $product -> id } }.files[0].name;
+            fotoLabel{{ $product -> id }}.textContent = foto{{ $product -> id }}.files[0].name;
 
-    const fileFoto{{ $product-> id}} = new FileReader();
-            fileFoto{ { $product -> id } }.readAsDataURL(foto{{ $product-> id}}.files[0]);
+            const fileFoto{{ $product-> id}} = new FileReader();
+            fileFoto{{ $product -> id }}.readAsDataURL(foto{{ $product-> id}}.files[0]);
             
-            fileFoto{ { $product -> id } }.onload = function (e) {
-                fotoLoad{ { $product -> id } }.src = e.target.result;
-    }
+            fileFoto{{ $product -> id }}.onload = function (e) {
+                fotoLoad{{ $product -> id }}.src = e.target.result;
+            }
         }
     @endforeach
 </script>
