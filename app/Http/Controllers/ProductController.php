@@ -24,6 +24,15 @@ class ProductController extends Controller
 
     public function addProduct(Request $req)
     {
+        
+        $product = new Product;
+        $product->name = $req->product_name;
+        $product->quantity = $req->product_quantity;
+        $product->description = $req->product_description;
+        $product->category_id = $req->category_id;
+        $product->price = $req->product_price;
+        $product->status = $req->product_status;
+
         if($req->hasFile('product_banner')){
             $filenamewithextension = $req->file('product_banner')->getClientOriginalName();
 
@@ -37,19 +46,13 @@ class ProductController extends Controller
             $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
 
             $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
-            $product = Image::make($thumbnailPath)->resize(100, 100);
-            $product->save($thumbnailPath);
+            $product_image = Image::make($thumbnailPath)->resize(100, 100);
+            $product_image->save($thumbnailPath);
+            
+            $product->banner = '/' . $fileNameToStore;
+            $product->thumbnail = '/' . $fileNameToStore;
         }
-        $product = new Product;
-        $product->name = $req->product_name;
-        $product->quantity = $req->product_quantity;
-        $product->description = $req->product_description;
-        $product->category_id = $req->category_id;
-        $product->price = $req->product_price;
-        $product->status = $req->product_status;
         
-        $product->banner = '/' . $fileNameToStore;
-        $product->thumbnail = '/' . $fileNameToStore;
         
         $product->raw = $req->product_raw;
         // dd($product);
@@ -60,6 +63,14 @@ class ProductController extends Controller
     public function update(Request $req, $id)
     {
         
+        $product = Product::find($id);
+        $product->name = $req->product_name;
+        $product->quantity = $req->product_quantity;
+        $product->description = $req->product_description;
+        $product->category_id = $req->category_id;
+        $product->price = $req->product_price;
+        $product->status = $req->product_status;
+
         if($req->hasFile('product_banner')){
 
             if($req->oldImage){
@@ -79,20 +90,13 @@ class ProductController extends Controller
             $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
 
             $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
-            $product = Image::make($thumbnailPath)->resize(100, 100);
-            $product->save($thumbnailPath);
+            $product_image = Image::make($thumbnailPath)->resize(100, 100);
+            $product_image->save($thumbnailPath);
             // dd($product);
-            
+            $product->banner = '/' . $fileNameToStore;
+            $product->thumbnail = '/' . $fileNameToStore;
         }
-        $product = Product::find($id);
-        $product->name = $req->product_name;
-        $product->quantity = $req->product_quantity;
-        $product->description = $req->product_description;
-        $product->category_id = $req->category_id;
-        $product->price = $req->product_price;
-        $product->status = $req->product_status;
-        $product->banner = '/' . $fileNameToStore;
-        $product->thumbnail = '/' . $fileNameToStore;
+        
         $product->raw = $req->product_raw;
         $product->save();
 
