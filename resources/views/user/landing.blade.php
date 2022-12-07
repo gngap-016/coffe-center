@@ -16,7 +16,6 @@
         <hr class="border-main">
         <div class="d-flex flex-wrap">
             @foreach ($coffee as $d)
-                @if ($d->raw == 0)
                     <div class="card me-4 mb-4" style="width: 250px;">
                         <div class="card-body">
                             <img src="../images/banner-coffee.png" class="rounded img-fluid mb-2" alt="" style="min-height: 153px; max-width: 213px backgroun: grey">
@@ -32,7 +31,6 @@
                             </div>
                         </div>
                     </div>
-                @endif
             @endforeach
         </div>
     </div>
@@ -44,7 +42,6 @@
         <hr class="border-main">
         <div class="d-flex flex-wrap">
             @foreach ($seeds as $d)
-                @if ($d->raw == 1)
                     <div class="card me-4 mb-4" style="width: 250px;">
                         <div class="card-body">
                             <img src="../images/banner-coffee.png" class="rounded img-fluid mb-2" alt="" style="min-height: 153px; max-width: 213px backgroun: grey">
@@ -60,7 +57,6 @@
                             </div>
                         </div>
                     </div>
-                @endif
             @endforeach
         </div>
     </div>
