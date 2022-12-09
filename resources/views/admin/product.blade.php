@@ -194,7 +194,7 @@
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <input type="file" name="product_banner" class="form-control"
-                                        id="preview_gambar{{$product->id}}" onchange="previewImgEdt{{$product->id}}()">
+                                        id="preview_gambar{{$product->id}}"  accept="image/*" onchange="previewImgEdt{{$product->id}}()">
                                 </div>
                             </div>
                         </div>

@@ -10,9 +10,9 @@ class SettingController extends Controller
     //
     public function index()
     {
-        $settings = Setting::select('settings.*')->get();
+        $setting = Setting::select('settings.*')->first();
 
-        return view('admin.setting', compact(['settings']));
+        return view('admin.setting', compact(['setting']));
     }
 
     
