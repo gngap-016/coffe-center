@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                     @php
-                        $no = 1;
+                    $no = 1;
                     @endphp
                     @foreach ($products as $product)
                     <tr>
@@ -93,50 +93,92 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="file" name="product_banner" class="form-control" id="preview_gambar"
-                                        onchange="previewImg()" accept="image/*">
+                                    <input type="file" name="product_banner"
+                                        class="form-control @error('product_banner') is-invalid @enderror"
+                                        id="preview_gambar" onchange="previewImg()" accept="image/*">
+                                    @error('product_banner')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="mb-3">
-                                <label for="product_name" class="form-label">Nama Produk</label>
-                                <input type="text" id="product_name" name="product_name" class="form-control"
+                                <label for="product_name" class="form-label">Nama Produk <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" id="product_name" name="product_name"
+                                    class="form-control @error('product_name') is-invalid @enderror"
                                     placeholder="Produk">
+                                @error('product_name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            <label for="category_id" class="form-label">Kategori</label>
+                            <label for="category_id" class="form-label">Kategori <span
+                                    class="text-danger">*</span></label>
                             <select id="category_id" class="form-select mb-3" name="category_id" aria-label="Kategori">
                                 @foreach ($categories as $category)
+                                @if($category->status == 1){
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                }
+                                @endif
                                 @endforeach
                             </select>
                             <div class="mb-3">
-                                <label for="product_quantity" class="form-label">Banyak</label>
-                                <input type="number" id="product_quantity" name="product_quantity" class="form-control"
+                                <label for="product_quantity" class="form-label">Banyak <span
+                                        class="text-danger">*</span></label>
+                                <input type="number" id="product_quantity" name="product_quantity"
+                                    class="form-control @error('product_quantity') is-invalid @enderror"
                                     placeholder="20">
+                                @error('product_quantity')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
                             </div>
                             <div class="mb-3">
-                                <label for="product_price" class="form-label">Harga</label>
-                                <input type="number" id="product_price" name="product_price" class="form-control"
+                                <label for="product_price" class="form-label">Harga <span
+                                        class="text-danger">*</span></label>
+                                <input type="number" id="product_price" name="product_price"
+                                    class="form-control @error('product_price') is-invalid @enderror"
                                     placeholder="20000">
+                                @error('product_price')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="mb-3">
-                                <label for="product_description" class="form-label">Deskripsi Produk</label>
-                                <textarea id="product_description" name="product_description" class="form-control"
+                                <label for="product_description" class="form-label">Deskripsi Produk <span
+                                        class="text-danger">*</span></label>
+                                <textarea id="product_description" name="product_description"
+                                    class="form-control @error('product_description') is-invalid @enderror"
                                     rows="10"></textarea>
+                                @error('product_description')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="product_status" class="form-label">Kondisi</label>
-                                <select id="product_status" class="form-select" name="product_raw"
+                                <label for="product_status" class="form-label">Kondisi <span
+                                        class="text-danger">*</span></label>
+                                <select id="product_status" class="form-select " name="product_raw"
                                     aria-label="Default select example">
                                     <option value="1">Mentah / Bibit</option>
                                     <option value="0">Bubuk</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="product_status" class="form-label">Status</label>
+                                <label for="product_status" class="form-label">Status <span
+                                        class="text-danger">*</span></label>
                                 <select id="product_status" class="form-select" name="product_status"
                                     aria-label="Default select example">
                                     <option value="1">Aktif</option>
@@ -183,8 +225,7 @@
                                     style="max-width: 300px; max-height: 300px;">
                                 @else
                                 <img src="product-images/default.png" class="img-thumbnail"
-                                    id="gambar_load{{$product->id}}"
-                                    style="max-width: 300px; max-height: 300px;"
+                                    id="gambar_load{{$product->id}}" style="max-width: 300px; max-height: 300px;"
                                     alt="{{ $product->name }}">
                                 @endif
 
@@ -193,8 +234,15 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="file" name="product_banner" class="form-control"
-                                        id="preview_gambar{{$product->id}}"  accept="image/*" onchange="previewImgEdt{{$product->id}}()">
+                                    <input type="file" name="product_banner"
+                                        class="form-control @error('product_banner') is-invalid @enderror"
+                                        id="preview_gambar{{$product->id}}" accept="image/*"
+                                        onchange="previewImgEdt({{$product->id}})">
+                                    @error('product_banner')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -310,19 +358,20 @@
 
     // preview gambar edit
     @foreach($products as $product)
-        function previewImgEdt{{$product->id}}() {
-            const foto{{ $product-> id}} = document.querySelector('#preview_gambar{{$product->id}}');
-            const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
-            const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
+        function previewImgEdt{ { $product -> id } } () {
+            const foto{{ $product-> id
+        }} = document.querySelector('#preview_gambar{{$product->id}}');
+    const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
+    const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
 
-            fotoLabel{{ $product -> id }}.textContent = foto{{ $product -> id }}.files[0].name;
+            fotoLabel{ { $product -> id } }.textContent = foto{ { $product -> id } }.files[0].name;
 
-            const fileFoto{{ $product-> id}} = new FileReader();
-            fileFoto{{ $product -> id }}.readAsDataURL(foto{{ $product-> id}}.files[0]);
+    const fileFoto{{ $product-> id}} = new FileReader();
+            fileFoto{ { $product -> id } }.readAsDataURL(foto{{ $product-> id}}.files[0]);
             
-            fileFoto{{ $product -> id }}.onload = function (e) {
-                fotoLoad{{ $product -> id }}.src = e.target.result;
-            }
+            fileFoto{ { $product -> id } }.onload = function (e) {
+                fotoLoad{ { $product -> id } }.src = e.target.result;
+    }
         }
     @endforeach
 </script>

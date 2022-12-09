@@ -15,11 +15,10 @@
             <div class="row">
                 <div class="col-sm-4 mb-3">
                     @if ($setting->logo !== null)
-                        <img src="{{ asset('storage/setting_images/logo').$setting->logo }}"
-                            class="img-logo img-thumbnail" width="100%" alt="{{ $setting->name }}">
+                    <img src="{{ asset('storage/setting_images').$setting->logo }}" class="img-logo img-thumbnail"
+                        width="100%" alt="{{ $setting->name }}">
                     @else
-                        <img src="product-images/default.png" class="img-logo img-thumbnail"
-                            alt="{{ $setting->name }}">
+                    <img src="product-images/default.png" class="img-logo img-thumbnail" alt="{{ $setting->name }}">
                     @endif
                 </div>
                 <div class="col-sm-8 mb-3">
@@ -74,10 +73,10 @@
         </div>
     </div>
 </div>
-       
+
 <!-- Modal Edit -->
-<div class="modal fade modal-xl" id="editData" tabindex="-1" data-bs-backdrop="static"
-    data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-xl" id="editData" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -94,21 +93,18 @@
                                 <input type="hidden" name="oldImage" value="{{$setting->logo}}">
                                 @if ($setting->logo !== null)
                                 <img src="{{ asset('storage/setting_images').$setting->logo }}" alt="{{$setting->name}}"
-                                    id="gambar_load" class="img-thumbnail"
-                                    style="max-width: 300px; max-height: 300px;">
+                                    id="gambar_load" class="img-thumbnail" style="max-width: 300px; max-height: 300px;">
                                 @else
-                                <img src="product-images/default.png" class="img-thumbnail"
-                                    id="gambar_load"
-                                    style="max-width: 300px; max-height: 300px;"
-                                    alt="{{$setting->name}}">
+                                <img src="product-images/default.png" class="img-thumbnail" id="gambar_load"
+                                    style="max-width: 300px; max-height: 300px;" alt="{{$setting->name}}">
                                 @endif
                                 <br>
                                 <label class="fotoLabel">Preview Foto</label>
                             </div>
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="file" name="setting_logo" class="form-control"
-                                        id="preview_gambar" accept="image/*" onchange="previewImg()">
+                                    <input type="file" name="setting_logo" class="form-control" id="preview_gambar"
+                                        accept="image/*" onchange="previewImg()">
                                 </div>
                             </div>
                         </div>
@@ -125,8 +121,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="setting_service_time" class="form-label">Waktu Pelayanan</label>
-                                <input type="text" id="setting_service_time" name="setting_service_time" class="form-control"
-                                    placeholder="08:00 - 19:00" value="{{$setting->service_time}}">
+                                <input type="text" id="setting_service_time" name="setting_service_time"
+                                    class="form-control" placeholder="08:00 - 19:00" value="{{$setting->service_time}}">
                             </div>
                             <div class="mb-3">
                                 <label for="setting_description" class="form-label">Deskripsi Toko</label>
@@ -139,22 +135,22 @@
                                 <label for="setting_phone" class="form-label">Telepon</label>
                                 <input type="text" id="setting_phone" name="setting_phone" class="form-control"
                                     placeholder="6285263193452" value="{{$setting->phone}}">
-                            </div>  
+                            </div>
                             <div class="mb-3">
                                 <label for="setting_whatsapp" class="form-label">Whatsapp</label>
                                 <input type="text" id="setting_whatsapp" name="setting_whatsapp" class="form-control"
                                     placeholder="6285263193452" value="{{$setting->whatsapp}}">
-                            </div>  
+                            </div>
                             <div class="mb-3">
                                 <label for="setting_email" class="form-label">Email</label>
                                 <input type="text" id="setting_email" name="setting_email" class="form-control"
                                     placeholder="email@email.com" value="{{$setting->email}}">
-                            </div>  
+                            </div>
                             <div class="mb-3">
                                 <label for="setting_facebook" class="form-label">Facebook</label>
                                 <input type="text" id="setting_facebook" name="setting_facebook" class="form-control"
                                     placeholder="Facebook_Username" value="{{$setting->facebook}}">
-                            </div>  
+                            </div>
                             <div class="mb-3">
                                 <label for="setting_instagram" class="form-label">Instagram</label>
                                 <input type="text" id="setting_instagram" name="setting_instagram" class="form-control"
@@ -164,7 +160,7 @@
                                 <label for="setting_address" class="form-label">Alamat Toko</label>
                                 <textarea id="setting_address" name="setting_address" class="form-control"
                                     rows="5">{{$setting->address}}</textarea>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -184,10 +180,10 @@
     // preview gambar
     function previewImg() {
         const foto = document.querySelector('#preview_gambar');
-        const fotoLabel = document.querySelector('.fotoLabel');
+        // const fotoLabel = document.querySelector('.fotoLabel');
         const fotoLoad = document.querySelector('#gambar_load');
 
-        fotoLabel.textContent = foto.files[0].name;
+        // fotoLabel.textContent = foto.files[0].name;
 
         const fileFoto = new FileReader();
         fileFoto.readAsDataURL(foto.files[0]);
