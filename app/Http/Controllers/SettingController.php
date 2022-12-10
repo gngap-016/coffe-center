@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class SettingController extends Controller
 {
@@ -36,6 +38,8 @@ class SettingController extends Controller
     }
     public function update(Request $req, $id)
     {
+        
+
         $setting = Setting::find($id);
         $setting->name = $req->setting_name;
         $setting->address = $req->setting_address;
@@ -43,6 +47,23 @@ class SettingController extends Controller
         $setting->instagram = $req->setting_instagram;
         $setting->facebook = $req->setting_facebook;
         $setting->email = $req->setting_email;
+        if($req->file('setting_logo')){
+            if($req->oldImage){
+                Storage::delete('public/setting_images'.$req->oldImage);
+            }
+            
+            $filenamewithextension = $req->file('setting_logo')->getClientOriginalName();
+
+            $fileName = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            $extension = $req->file('setting_logo')->getClientOriginalExtension();
+
+            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+
+            $req->file('setting_logo')->storeAs('public/setting_images', $fileNameToStore);
+
+            $setting->logo = '/' . $fileNameToStore;
+        }
         $setting->whatsapp = $req->setting_whatsapp;
         $setting->phone = $req->setting_phone;
 
@@ -50,7 +71,7 @@ class SettingController extends Controller
 
         return redirect('/setting');
     }
-    public function destroy($id)
+    public function destroy(Request $req, $id)
     {
         $setting = Setting::find($id)->delete();
         return redirect('/setting');
