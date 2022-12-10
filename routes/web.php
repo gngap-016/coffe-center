@@ -36,7 +36,7 @@ Route::controller(HomeController::class)->name('home.')->group(function () {
     Route::get('/coffee', 'coffee')->name('coffee');
     Route::get('/cart', 'cart')->name('cart');
     Route::post('/order', 'order')->name('order');
-    // Route::get('/more', 'more')->name('more');
+    Route::get('/courier', 'getCourier')->name('courier');
 });
 
 Route::controller(LoginController::class)->prefix('login')->group(function () {

@@ -237,7 +237,7 @@
                                     <input type="file" name="product_banner"
                                         class="form-control @error('product_banner') is-invalid @enderror"
                                         id="preview_gambar{{$product->id}}" accept="image/*"
-                                        onchange="previewImgEdt({{$product->id}})">
+                                        onchange="previewImgEdt{{$product->id}}()">
                                     @error('product_banner')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -343,10 +343,10 @@
     // preview gambar
     function previewImg() {
         const foto = document.querySelector('#preview_gambar');
-        const fotoLabel = document.querySelector('.fotoLabel');
+        // const fotoLabel = document.querySelector('.fotoLabel');
         const fotoLoad = document.querySelector('#gambar_load');
 
-        fotoLabel.textContent = foto.files[0].name;
+        // fotoLabel.textContent = foto.files[0].name;
 
         const fileFoto = new FileReader();
         fileFoto.readAsDataURL(foto.files[0]);
@@ -358,20 +358,19 @@
 
     // preview gambar edit
     @foreach($products as $product)
-        function previewImgEdt{ { $product -> id } } () {
-            const foto{{ $product-> id
-        }} = document.querySelector('#preview_gambar{{$product->id}}');
-    const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
-    const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
+        function previewImgEdt{{ $product -> id }}() {
+            const foto{{ $product-> id}} = document.querySelector('#preview_gambar{{$product->id}}');
+            // const fotoLabel{{ $product-> id}} = document.querySelector('.fotoLabel{{$product->id}}');
+            const fotoLoad{{ $product-> id}}  = document.querySelector('#gambar_load{{$product->id}}');
 
-            fotoLabel{ { $product -> id } }.textContent = foto{ { $product -> id } }.files[0].name;
+            // fotoLabel{{ $product -> id }}.textContent = foto{{ $product -> id }}.files[0].name;
 
-    const fileFoto{{ $product-> id}} = new FileReader();
-            fileFoto{ { $product -> id } }.readAsDataURL(foto{{ $product-> id}}.files[0]);
+            const fileFoto{{ $product-> id}} = new FileReader();
+            fileFoto{{ $product -> id }}.readAsDataURL(foto{{ $product-> id}}.files[0]);
             
-            fileFoto{ { $product -> id } }.onload = function (e) {
-                fotoLoad{ { $product -> id } }.src = e.target.result;
-    }
+            fileFoto{{ $product -> id }}.onload = function (e) {
+                fotoLoad{{ $product -> id }}.src = e.target.result;
+            }
         }
     @endforeach
 </script>
