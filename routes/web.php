@@ -67,8 +67,10 @@ Route::name('admin.')->middleware(['auth'])->group(function () {
         Route::post('/{id}/update', 'update')->name('update');
         Route::get('/{id}/destroy', 'destroy')->name('destroy');
     });
-    Route::controller(SettingController::class)->prefix('setting')->name('setting.')->group(function () {
+     Route::controller(SettingController::class)->prefix('setting')->name('setting.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::post('/addSetting', 'addSetting')->name('addSetting');
         Route::post('/{id}/update', 'update')->name('update');
+        Route::get('/{id}/destroy', 'destroy')->name('destroy');
     });
 });

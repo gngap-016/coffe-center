@@ -24,7 +24,13 @@ class ProductController extends Controller
 
     public function addProduct(Request $req)
     {
-        
+        $product = $req->validate([
+            'product_name' => 'required',
+            'product_quantity' => 'required',
+            'product_description' => 'required',
+            'product_price' => 'required',
+            'product_banner' => 'image|file|max:1024',
+        ]);
         $product = new Product;
         $product->name = $req->product_name;
         $product->quantity = $req->product_quantity;
@@ -62,7 +68,14 @@ class ProductController extends Controller
 
     public function update(Request $req, $id)
     {
-        
+        $product = $req->validate([
+            'product_name' => 'required',
+            'product_quantity' => 'required',
+            'product_description' => 'required',
+            'product_price' => 'required',
+            'product_banner' => 'image|file|max:1024',
+        ]);
+
         $product = Product::find($id);
         $product->name = $req->product_name;
         $product->quantity = $req->product_quantity;

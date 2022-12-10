@@ -72,5 +72,19 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
             'raw' => 1,
         ]);
+
+        \App\Models\Setting::create([
+            'name' => 'Cofee Center',
+            'service_time' => '09.00 - 15.00',
+            'address' => 'Jl.Urip Sumoharjo',
+            'description' => 'Penjual Kopi No 1 di Lampung dan sudah menjual hampir ke seluruh Indonesia',
+            'keywords' => 'Bersatu Kita Teguh, Bercerai Kita Runtuh',
+            'instagram' => 'https://github.com/GilbertDay',
+            'facebook' => 'https://github.com/GilbertDay',
+            'email' => 'gilbert.christyano@si.ukdw.ac.id',
+            'instagram' => 'https://github.com/GilbertDay',
+            'whatsapp' => '08214763055',
+            'phone' => '08214763055',
+        ]);
     }
 }
