@@ -160,7 +160,7 @@
                                 <span class="footer-title">{{ $set->keywords . '. ' . $set->description }}</span>
                             </li>
                             <li class="nav-item pt-2">
-                                <span class="footer-title">{{ 'Buka ' . $set->address }}</span>
+                                <span class="footer-title">{{ 'Alamat ' . $set->address }}</span>
                             </li>
                             <li class="nav-item pt-2">
                                 <span class="footer-title">{{ 'Buka ' . $set->service_time }}</span>
@@ -201,7 +201,7 @@
 
                 <div class="row justify-content-between">
                     <div class="col-md-6">
-                        <span class="copyright quick-links">Copyright &copy; Coffee Center
+                        <span class="copyright quick-links">Copyright &copy; {{ $set->name }}
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
