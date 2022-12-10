@@ -112,7 +112,7 @@
         }
 
         function setDataCart() {
-            if (dataProducts == null) {
+            if (dataProducts == null || dataProducts == '[]') {
                 $('#order-detail').html('')
                 $('#order-detail').append(`<p class="text-center">Keranjang Kosong</p>`)
                 $('#order-detail').removeClass('d-none')
@@ -123,14 +123,26 @@
                 dataProducts.forEach(p => {
                     let html = `
                         <div>
-                            <div class="d-flex">
-                                <img src="../images/banner-coffee.png" class="rounded img-thumbnail" style="max-width: 80px; max-height: 80px; min-height: 80px; object-fit: cover">
-                                <div class="mx-2 w-100">
-                                    <p class="mb-0 fw-bold">${p.name}</p>
-                                    <p style="font-size: 14px">Rp${numberFormat(p.price)}</p>
-                                    <div class="d-flex justify-content-end w-100">
+                            <div class="d-flex">`
 
-                    `
+                    if (p.real_data.thumbnail !== null) {
+                        html += `
+                                <img src="/storage/product_images/thumbnail/${p.real_data.thumbnail}" class="rounded img-thumbnail" style="max-width: 80px; max-height: 80px; min-height: 80px; object-fit: cover">
+                                        <div class="mx-2 w-100">
+                                            <p class="mb-0 fw-bold">${p.name}</p>
+                                            <p style="font-size: 14px">Rp${numberFormat(p.price)}</p>
+                                            <div class="d-flex justify-content-end w-100">
+                                `
+                    } else {
+                        html += `
+                                <img src="product-images/default.png" class="rounded img-thumbnail" style="max-width: 80px; max-height: 80px; min-height: 80px; object-fit: cover">
+                                        <div class="mx-2 w-100">
+                                            <p class="mb-0 fw-bold">${p.name}</p>
+                                            <p style="font-size: 14px">Rp${numberFormat(p.price)}</p>
+                                            <div class="d-flex justify-content-end w-100">
+                                `
+                    }
+
                     if (p.qty > 1) {
                         html += `
                                         <button class="btn btn-sm btn-secondary" onclick="cartEditMin(` + p.id + `)">
@@ -212,7 +224,8 @@
                     $('#ongkir-title').text('Ongkir (' + c.code.toUpperCase() + ' ' + c.costs[0]
                         .service + ') ')
                     $('#ongkir-form').val(c.costs[0].cost[0].value)
-                    $('#courier-form').val(c.costs[0].service)
+                    $('#courier-form').val(c.code.toUpperCase() + ' ' + c.costs[0]
+                        .service)
                     $('#total').text('Rp' + numberFormat(parseInt(dataOrder.total_price) + c.costs[0]
                         .cost[0].value))
                 }

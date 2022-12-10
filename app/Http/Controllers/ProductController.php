@@ -39,27 +39,27 @@ class ProductController extends Controller
         $product->price = $req->product_price;
         $product->status = $req->product_status;
 
-        if($req->hasFile('product_banner')){
+        if ($req->hasFile('product_banner')) {
             $filenamewithextension = $req->file('product_banner')->getClientOriginalName();
 
             $fileName = pathinfo($filenamewithextension, PATHINFO_FILENAME);
 
             $extension = $req->file('product_banner')->getClientOriginalExtension();
 
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
 
             $req->file('product_banner')->storeAs('public/product_images', $fileNameToStore);
             $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
 
-            $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
-            $product_image = Image::make($thumbnailPath)->resize(100, 100);
+            $thumbnailPath = public_path('storage/product_images/thumbnail/' . $fileNameToStore);
+            $product_image = Image::make($thumbnailPath)->resize(220, 161);
             $product_image->save($thumbnailPath);
-            
+
             $product->banner = '/' . $fileNameToStore;
             $product->thumbnail = '/' . $fileNameToStore;
         }
-        
-        
+
+
         $product->raw = $req->product_raw;
         // dd($product);
         $product->save();
@@ -73,7 +73,7 @@ class ProductController extends Controller
             'product_quantity' => 'required',
             'product_description' => 'required',
             'product_price' => 'required',
-            'product_banner' => 'image|file|max:1024',
+            'product_banner' => 'image|file|max:1024|required',
         ]);
 
         $product = Product::find($id);
@@ -84,11 +84,11 @@ class ProductController extends Controller
         $product->price = $req->product_price;
         $product->status = $req->product_status;
 
-        if($req->hasFile('product_banner')){
+        if ($req->hasFile('product_banner')) {
 
-            if($req->oldImage){
-                Storage::delete('public/product_images'.$req->oldImage);
-                Storage::delete('public/product_images/thumbnail'.$req->oldImage);
+            if ($req->oldImage) {
+                Storage::delete('public/product_images' . $req->oldImage);
+                Storage::delete('public/product_images/thumbnail' . $req->oldImage);
             }
             // dd($req->oldImage);
             $filenamewithextension = $req->file('product_banner')->getClientOriginalName();
@@ -97,19 +97,19 @@ class ProductController extends Controller
 
             $extension = $req->file('product_banner')->getClientOriginalExtension();
 
-            $fileNameToStore = $fileName.'_'.time().'.'.$extension;
+            $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
 
             $req->file('product_banner')->storeAs('public/product_images', $fileNameToStore);
             $req->file('product_banner')->storeAs('public/product_images/thumbnail', $fileNameToStore);
 
-            $thumbnailPath = public_path('storage/product_images/thumbnail/'.$fileNameToStore);
-            $product_image = Image::make($thumbnailPath)->resize(100, 100);
+            $thumbnailPath = public_path('storage/product_images/thumbnail/' . $fileNameToStore);
+            $product_image = Image::make($thumbnailPath)->resize(220, 161);
             $product_image->save($thumbnailPath);
             // dd($product);
             $product->banner = '/' . $fileNameToStore;
             $product->thumbnail = '/' . $fileNameToStore;
         }
-        
+
         $product->raw = $req->product_raw;
         $product->save();
 
@@ -117,11 +117,11 @@ class ProductController extends Controller
     }
 
     public function destroy(Request $req, $id)
-    {   
+    {
         // dd($req->oldImage);
-        if($req->oldImage){
-            Storage::delete('public/product_images'.$req->oldImage);
-            Storage::delete('public/product_images/thumbnail'.$req->oldImage);
+        if ($req->oldImage) {
+            Storage::delete('public/product_images' . $req->oldImage);
+            Storage::delete('public/product_images/thumbnail' . $req->oldImage);
         }
         $product = Product::find($id)->delete();
         return redirect('/product');

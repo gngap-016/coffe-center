@@ -78,53 +78,54 @@ class HomeController extends Controller
         }
 
         $set        = Setting::first();
-        // $phone      = $set->whatsapp;
-        // $phone_code = substr((int)$phone, 0, 2);
-        // if ((int)$phone_code == 62) {
-        //     $phone_number = $phone;
-        // } else {
-        //     $phone_number = '62' . substr($phone, 1);
-        // }
-        // $id_product = $request->id_product;
-        // $quantity   = $request->quantity;
-        // $total_qty  = 0;
-        // $total      = 0;
 
-        // // $api_wa     = 'https://wa.me/send?phone=';
-        // $api_wa     = 'https://api.whatsapp.com/send/?phone=';
-        // $text       = [];
-        // $text[]     = 'Mau Pesan dong kak!';
-        // $text[]     = '';
-        // $text[]     = 'Detail Pemesan :';
-        // $text[]     = '- Nama lengkap      :   *' . $request->name . '*';
-        // $text[]     = '- Telepon                  :   *' . $request->phone . '*';
-        // $text[]     = '- Alamat Lengkap   : %0A  *' . $request->address . '*';
-        // $text[]     = '- Catatan                   : %0A  ' . $request->noted;
-        // $text[]     = '';
-        // $text[]     = 'Detail Barang :';
-        // foreach ($id_product as $key => $id_product) {
-        //     $product = Product::find($id_product);
+        $phone      = $set->whatsapp;
+        $phone_code = substr((int)$phone, 0, 2);
+        if ((int)$phone_code == 62) {
+            $phone_number = $phone;
+        } else {
+            $phone_number = '62' . substr($phone, 1);
+        }
+        $id_product = json_decode($request->products);
+        $total_qty  = 0;
+        $total      = 0;
 
-        //     $total_qty += $quantity[$key];
-        //     $total += $product->price * $quantity[$key];
+        // $api_wa     = 'https://wa.me/send?phone=';
+        $api_wa     = 'https://api.whatsapp.com/send/?phone=';
+        $text       = [];
+        $text[]     = 'Mau Pesan dong kak!';
+        $text[]     = '';
+        $text[]     = 'Detail Pemesan :';
+        $text[]     = '- Nama lengkap      :   *' . $request->name . '*';
+        $text[]     = '- Telepon                  :   *' . $request->telp . '*';
+        $text[]     = '- Alamat Lengkap   : %0A  *' . $request->full_address . '*';
+        $text[]     = '- Catatan                   : %0A  ' . $request->note;
+        $text[]     = '';
+        $text[]     = 'Detail Barang :';
+        $count = 0;
 
-        //     $no = $key + 1;
-        //     $text[] = $no . '. ' . $product->name;
-        //     $text[] = '     ' . $quantity[$key] . ' @ Rp. ' . numberFormat($product->price);
-        //     $text[] = '     ' . '*Total Rp. ' . numberFormat($product->price * $quantity[$key]) . '*';
-        //     $text[] = '';
-        // }
-        // $text[] = '----------------------------------------';
-        // $text[] = 'Detail pembelian';
-        // $text[] = 'Total Barang          : *' . numberFormat(count($quantity)) . '* Jenis';
-        // $text[] = 'Total Unit               : *' . numberFormat($total_qty) . '*';
-        // $text[] = 'Total Keseluruhan : *Rp. ' . numberFormat($total) . '*';
-        // $text[] = '----------------------------------------';
-        // $text[] = 'Kunjungi Toko : coffee-center.com';
+        foreach ($id_product as $p) {
+            $product = Product::find($p->id);
 
-        dd($request->all());
+            $total_qty += $p->qty;
+            $total += $p->total_price;
 
-        // return redirect()->away($api_wa . $phone_number . '&text=' . implode('%0A', $text));
+            $no = $count + 1;
+            $text[] = $no . '. ' . $p->name;
+            $text[] = '     ' . $p->qty . ' @ Rp. ' . numberFormat($p->price);
+            $text[] = '     ' . '*Total Rp. ' . numberFormat($p->price * $p->qty) . '*';
+            $text[] = '';
+        }
+        $text[] = '----------------------------------------';
+        $text[] = 'Detail pesanan';
+        $text[] = 'Sub Total                   : *' . numberFormat($total);
+        $text[] = 'Ongkir (' . $request->courier . ')          : *' . numberFormat((int)$request->ongkir);
+        $text[] = '';
+        $text[] = 'Total Keseluruhan     : *Rp. ' . numberFormat($total + (int)$request->ongkir) . '*';
+        $text[] = '----------------------------------------';
+        $text[] = 'Kunjungi Toko : coffee-center.com';
+
+        return redirect()->away($api_wa . $phone_number . '&text=' . implode('%0A', $text));
     }
 
     public function getCourier(Request $request)

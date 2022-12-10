@@ -1,3 +1,7 @@
+@php
+    $set = \App\Models\Setting::first();
+    $user = \App\Models\User::first();
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -8,7 +12,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Coffee App</title>
+    <link rel="icon" type="image/x-icon"
+        href="{{ $set->logo == null ? asset('app-assets/icon/store.png') : asset('storage/setting_images') . $set->logo }}">
+    <title>{{ $set->name }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -28,6 +34,82 @@
         body {
             font-family: 'Poppins';
         }
+
+        footer a {
+            color: #6c757d !important;
+        }
+
+        a:hover {
+            color: #fec503;
+            text-decoration: none;
+        }
+
+        ::selection {
+            background: #fec503;
+            text-shadow: none;
+        }
+
+        footer {
+            padding: 2rem 0;
+            background-color: #212529;
+        }
+
+        .footer-column:not(:first-child) {
+            padding-top: 2rem;
+        }
+
+        .footer-column {
+            text-align: center;
+        }
+
+        ul.social-buttons {
+            margin-bottom: 0;
+        }
+
+        ul.social-buttons li a:active,
+        ul.social-buttons li a:focus,
+        ul.social-buttons li a:hover {
+            background-color: grey;
+        }
+
+        ul.social-buttons li a {
+            font-size: 20px;
+            line-height: 40px;
+            display: block;
+            width: 40px;
+            height: 40px;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+            color: #fff;
+            border-radius: 100%;
+            outline: 0;
+            background-color: #1a1d20;
+        }
+
+        footer .quick-links {
+            font-size: 90%;
+            line-height: 40px;
+            margin-bottom: 0;
+            text-transform: none;
+        }
+
+        .copyright {
+            color: white;
+        }
+
+        .footer-title {
+            color: #fff;
+        }
+
+        .img-footer {
+            height: 30px;
+            max-height: 30px;
+        }
+
+        .img-logo {
+            max-height: 50px;
+        }
     </style>
 </head>
 
@@ -35,7 +117,14 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg sticky-top" style="min-height: 76px; background-color: #F8EDE3;">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="/">Coffee App</a>
+                @if ($set->logo !== null)
+                    <a class="navbar-brand fw-bold" href="/">
+                        <img src="{{ asset('storage/setting_images') . $set->logo }}" class="img-logo"
+                            alt="{{ $set->name }}">
+                    </a>
+                @else
+                    <a class="navbar-brand fw-bold" href="/">Coffee App</a>
+                @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <i data-feather="menu" width="15"></i>
@@ -58,6 +147,73 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer>
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-md-4">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <span class="footer-title fs-4 fw-semibold">{{ $set->name }}</span>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <span class="footer-title">{{ $set->keywords . '. ' . $set->description }}</span>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <span class="footer-title">{{ 'Buka ' . $set->address }}</span>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <span class="footer-title">{{ 'Buka ' . $set->service_time }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 pt-3 pt-md-0 ps-0 ps-md-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <span class="footer-title ps-3">Company</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/coffee">Kopi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cart">Keranjang</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 pt-3 pt-md-0 ps-0 ps-md-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <span class="footer-title ps-3">Contact</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"><i data-feather="phone" class="me-3"></i>{{ $set->phone }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"><i data-feather="mail" class="me-3"></i>{{ $user->email }}</a>
+                            </li>
+                    </div>
+                </div>
+
+                <div class="text-center text-white py-4"><i data-feather="more-horizontal"></i></div>
+
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <span class="copyright quick-links">Copyright &copy; Coffee Center
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                        </span>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <img src="../images/dicoding.png" alt="logo dicoding" class="img-footer rounded me-3">
+                        <img src="../images/merdeka.png" alt="logo kampus merdeka" class="img-footer rounded">
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
