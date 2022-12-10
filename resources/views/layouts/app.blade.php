@@ -121,6 +121,7 @@
                     <a class="navbar-brand fw-bold" href="/">
                         <img src="{{ asset('storage/setting_images') . $set->logo }}" class="img-logo"
                             alt="{{ $set->name }}">
+                        Coffee App
                     </a>
                 @else
                     <a class="navbar-brand fw-bold" href="/">Coffee App</a>
