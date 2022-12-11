@@ -13,9 +13,8 @@ Setting database name
 3 Run composer install
 4 Run npm install
 
-5 Run php artisan storage:link
-
-6 Run php artisan key:generate
+5 Run php artisan key:generate
+6 Run php artisan storage:link
 7 Run php artisan migrate:fresh --seed
 
 8 Run php artisan serve
