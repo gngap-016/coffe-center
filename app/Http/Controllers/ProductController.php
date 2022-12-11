@@ -73,7 +73,7 @@ class ProductController extends Controller
             'product_quantity' => 'required',
             'product_description' => 'required',
             'product_price' => 'required',
-            'product_banner' => 'image|file|max:1024|required',
+            'product_banner' => 'image|file|max:1024',
         ]);
 
         $product = Product::find($id);

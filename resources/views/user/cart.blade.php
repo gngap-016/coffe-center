@@ -88,7 +88,9 @@
             dataOrder = localStorage.getItem('data_order')
             $('#data-order').html('')
             setDataCart()
-            $("#city-ongkir").val(null).trigger('change');
+            // $("#city-ongkir").val(null).trigger('change');
+            location.reload()
+            $('#all-products').val(null)
             $('#all-products').val(dataProducts)
         }
 
