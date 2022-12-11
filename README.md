@@ -2,7 +2,7 @@
 
 ## Build Setup
 
-bash
+```bash
 1 Setting Xampp (require php 8.1.2)
 Open php.ini remove command ; in "extension=gd"
 
@@ -19,3 +19,4 @@ Setting database name
 7 Run php artisan migrate:fresh --seed
 
 8 Run php artisan serve
+```
