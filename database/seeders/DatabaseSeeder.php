@@ -83,8 +83,8 @@ class DatabaseSeeder extends Seeder
             'facebook' => 'https://github.com/GilbertDay',
             'email' => 'gilbert.christyano@si.ukdw.ac.id',
             'instagram' => 'https://github.com/GilbertDay',
-            'whatsapp' => '08214763055',
-            'phone' => '08214763055',
+            'whatsapp' => '082147763055',
+            'phone' => '082147763055',
         ]);
     }
 }
